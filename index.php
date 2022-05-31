@@ -1,67 +1,60 @@
 <?php
 
-require_once __DIR__ . '/Color.php';
+trait Trait1 {
 
-$color = new Color (300, 200, 200);
-$color2 = new Color(300,200,200);
+   public function method () {
 
-$mixedColor = $color->mix(new Color (100,100,100));
-
-
-
-
-
-
-var_dump($mixedColor);
-
-$colorrand= Color::randomColor();
-//var_dump($colorrand);
-
-
-
-
- function equals (Color $colorObject1, Color $colorObject2): bool{
-
-
-    if($colorObject1->getRed() == $colorObject2->getRed() && $colorObject1->getBlue() == $colorObject2->getBlue() && $colorObject1->getGreen() == $colorObject2->getGreen()){
-
-        return true;
+    return(1);
     }
 
-    else{
+    }
 
-        return false;
+trait Trait2 {
+
+    public function method() {
+
+    return(2);
+    }
     }
 
 
-}
+trait Trait3 {
+
+   public function method() {
+
+    return(3);
+    }
+
+    }
+
+
+class Test  {
+
+    use Trait1, Trait2, Trait3 {
+
+        Trait1::method insteadof Trait2, Trait3;
+        Trait2::method as secondmethod;
+        Trait3::method as thirdmethod;
+
+
+    }
 
 
 
+    public function getSum () {
 
+            $sum = $this->method() + $this->secondmethod() +$this->thirdmethod();
 
-try{
+            return($sum);
 
-    $test = new Color(400,300,200);
-}
-
-catch (Exception $e){
-
-    die($e->getMessage());
-}
+    }
+    }
 
 
 
+$test = new Test();
 
-
-
-
-
-
-
-
-
-
+var_dump($test->getSum());
 
 
 
